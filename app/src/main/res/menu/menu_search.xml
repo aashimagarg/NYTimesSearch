@@ -10,5 +10,10 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
+    <item android:id="@+id/action_filter"
+        android:orderInCategory="5"
+        android:title="Filter"
+        android:icon="@mipmap/ic_launcher"
+        app:showAsAction="never" />
 
 </menu>

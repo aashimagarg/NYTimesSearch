@@ -3,6 +3,7 @@ package com.example.aashimagarg.nytimessearch.activities;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.aashimagarg.nytimessearch.Article;
 import com.example.aashimagarg.nytimessearch.ArticleArrayAdapter;
+import com.example.aashimagarg.nytimessearch.FilterDialogFragment;
 import com.example.aashimagarg.nytimessearch.EndlessRecyclerViewScrollListener;
 import com.example.aashimagarg.nytimessearch.R;
 import com.loopj.android.http.AsyncHttpClient;
@@ -96,6 +98,7 @@ public class SearchActivity extends AppCompatActivity {
         // Assign the typeface to the view
         txt.setTypeface(font);
 
+
     }
 
 
@@ -136,6 +139,8 @@ public class SearchActivity extends AppCompatActivity {
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.menu_search, menu);
             MenuItem searchItem = menu.findItem(R.id.action_search);
+            MenuItem filterItem = menu.findItem(R.id.action_filter);
+
             final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -199,10 +204,13 @@ public class SearchActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-
-
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_filter:
+                showFragmentDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /*public void onArticleSearch(View view){
@@ -238,4 +246,13 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }*/
+
+    private void showFragmentDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        FilterDialogFragment filterDialogFragment = FilterDialogFragment.newInstance("Some Title");
+        filterDialogFragment.show(fm, "fragment_filter_search");
+    }
+
+
 }
+

@@ -6,7 +6,7 @@
         android:layout_width="430dp"
         android:layout_height="wrap_content"
         android:text="The New York Times"
-        android:textColor="#FFFF"
+        android:textColor="#000"
         android:id="@+id/myTitle"
         android:textSize="26dp"
         android:textAlignment="center"
