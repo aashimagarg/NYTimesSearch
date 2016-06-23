@@ -131,6 +131,8 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
         String thumbnailUrl = article.getThumbNail();
         if (!TextUtils.isEmpty(thumbnailUrl)){
             Picasso.with(thumbnail.getContext()).load(thumbnailUrl).into(thumbnail);
+        } else {
+            thumbnail.setImageResource(R.drawable.no_image);
         }
 
     }
