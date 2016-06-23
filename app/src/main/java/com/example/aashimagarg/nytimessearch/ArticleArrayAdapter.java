@@ -1,7 +1,6 @@
 package com.example.aashimagarg.nytimessearch;
 
 import android.content.Context;
-import android.gesture.GestureOverlayView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -75,7 +74,6 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public GestureOverlayView cellBack;
         public TextView tvTitle;
         public ImageView ivImage;
 
@@ -87,7 +85,6 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
             super(itemView);
 
             //initialize
-            cellBack = (GestureOverlayView) itemView.findViewById(R.id.gestureOverlayView);
             ivImage = (ImageView) itemView.findViewById(R.id.ivImage);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
 
