@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -130,7 +130,7 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
 
         String thumbnailUrl = article.getThumbNail();
         if (!TextUtils.isEmpty(thumbnailUrl)){
-            Picasso.with(thumbnail.getContext()).load(thumbnailUrl).into(thumbnail);
+            Glide.with(thumbnail.getContext()).load(thumbnailUrl).into(thumbnail);
         } else {
             thumbnail.setImageResource(R.drawable.no_image);
         }
