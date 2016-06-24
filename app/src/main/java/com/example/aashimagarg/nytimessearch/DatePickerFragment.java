@@ -1,17 +1,22 @@
-package com.example.aashimagarg.nytimessearch.activities;
+package com.example.aashimagarg.nytimessearch;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.os.Bundle;
-
-import com.example.aashimagarg.nytimessearch.FilterDialogFragment;
 
 import java.util.Calendar;
 
 /**
  * Created by aashimagarg on 6/23/16.
  */
-public class DatePickerFragment extends FilterDialogFragment {
+public class DatePickerFragment extends DialogFragment {
+
+
+    // 1. Defines the listener interface with a method passing back data result.
+    public interface DateDialogListener {
+        void onFinishEditDialog(String inputText);
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

@@ -1,21 +1,9 @@
 package com.example.aashimagarg.nytimessearch;
 
-import android.app.Dialog;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-
-
 /**
  * Created by aashimagarg on 6/22/16.
  */
-public class FilterDialogFragment extends DialogFragment {
+/*public class FilterDialogFragment extends DialogFragment {
 
     public FilterDialogFragment() {
         // Empty constructor is required for DialogFragment
@@ -59,4 +47,4 @@ public class FilterDialogFragment extends DialogFragment {
 
         return dialog;
     }
-}
+}*/

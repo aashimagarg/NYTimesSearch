@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.example.aashimagarg.nytimessearch.Article;
 import com.example.aashimagarg.nytimessearch.R;
 
-public class ArticleActivity extends AppCompatActivity {
+public class  ArticleActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

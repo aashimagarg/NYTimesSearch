@@ -4,4 +4,10 @@
     <string name="enter_search">Enter search query</string>
     <string name="title_activity_article">ArticleActivity</string>
     <string name="date">set date</string>
+    <string name="order_prompt">set order</string>
+    <string name="set_order">Set Order:</string>
+    <string-array name="order_array">
+        <item>newest</item>
+        <item>oldest</item>
+    </string-array>
 </resources>
