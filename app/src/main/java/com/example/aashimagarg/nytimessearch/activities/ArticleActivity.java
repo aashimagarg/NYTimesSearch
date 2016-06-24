@@ -50,8 +50,6 @@ public class  ArticleActivity extends AppCompatActivity {
         webView.loadUrl(article.getWebUrl());
     }
 
-    private ShareActionProvider miShareAction;
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
