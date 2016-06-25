@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.aashimagarg.nytimessearch.Article;
 import com.example.aashimagarg.nytimessearch.R;
+import com.example.aashimagarg.nytimessearch.TopArticle;
 
 public class  ArticleActivity extends AppCompatActivity {
 
@@ -38,8 +39,12 @@ public class  ArticleActivity extends AppCompatActivity {
         // Assign the typeface to the view
         txt.setTypeface(font);
 
+        //FIX CASTS... figure out if what is being passed in an article or a toparticle.. or should i make a new activity?
         Article article = (Article) getIntent().getSerializableExtra("article");
+        TopArticle article2 = (TopArticle) getIntent().getSerializableExtra("article2");
+
         WebView webView = (WebView) findViewById(R.id.wvArticle);
+        assert webView != null;
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url){
@@ -47,7 +52,11 @@ public class  ArticleActivity extends AppCompatActivity {
                 return true;
             }
         });
-        webView.loadUrl(article.getWebUrl());
+        if (article == null){
+            webView.loadUrl(article2.getWebUrl());
+        } else {
+            webView.loadUrl(article.getWebUrl());
+        }
     }
 
     @Override

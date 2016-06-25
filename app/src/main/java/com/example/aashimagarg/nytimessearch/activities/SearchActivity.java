@@ -101,14 +101,26 @@ public class SearchActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
                 //get the article to display
                 //pass in that article into intent
-                if (scroll) {
-                    Article article = articles.get(position);
-                    i.putExtra("article", article);
-                } else {
-                    TopArticle article2 = toparticles.get(position);
-                    i.putExtra("article", article2);
+                Article article = articles.get(position);
+                i.putExtra("article", article);
 
-                }
+                //launch the activity
+                startActivity(i); // brings up the second activity
+            }
+        });
+        //click on article
+        adapter2.setOnItemClickListener(new TopArticleArrayAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(View view, int position){
+                //create an intent to display the article
+                Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
+                //get the article to display
+                //pass in that article into intent
+
+                TopArticle article = toparticles.get(position);
+                i.putExtra("article2", article);
+
+
                 //launch the activity
                 startActivity(i); // brings up the second activity
             }
@@ -249,6 +261,8 @@ public class SearchActivity extends AppCompatActivity {
 
                             try {
                                 articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
+                                toparticles.clear();
+                                adapter2.notifyDataSetChanged();
                                 articles.clear();
                                 articles.addAll(Article.fromJSONArray(articleJsonResults));
                                 adapter.notifyDataSetChanged();
