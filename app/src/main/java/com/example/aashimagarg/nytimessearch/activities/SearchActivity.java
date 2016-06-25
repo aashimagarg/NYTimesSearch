@@ -43,9 +43,9 @@ public class SearchActivity extends AppCompatActivity {
     String query2;
     boolean scroll = false;
     RecyclerView rvArticles;
-    String setDateString = "";
-    String setOrderString = "";
-    String setTopicString = "";
+    String setDateString;
+    String setOrderString;
+    String setTopicString;
     ArrayList<Article> articles;
     ArrayList<TopArticle> toparticles;
     ArticleArrayAdapter adapter;
@@ -63,6 +63,18 @@ public class SearchActivity extends AppCompatActivity {
         setupViews();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (scroll){
+            rvArticles.setAdapter(adapter);
+        }
+        else {
+            rvArticles.setAdapter(adapter2);
+        }
+
+    }
+
     public void setupViews(){
       //  gvResults = (GridView) findViewById(R.id.gvResults);
         rvArticles = (RecyclerView) findViewById(R.id.rvArticles);
@@ -70,11 +82,7 @@ public class SearchActivity extends AppCompatActivity {
         toparticles = new ArrayList<>();
         adapter = new ArticleArrayAdapter(articles);
         adapter2 = new TopArticleArrayAdapter(toparticles);
-        if (scroll) {
-            rvArticles.setAdapter(adapter);
-        }else {
-            rvArticles.setAdapter(adapter2);
-        }
+        rvArticles.setAdapter(adapter2);
         // Attach the layout manager to the recycler view
         StaggeredGridLayoutManager stagger = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rvArticles.setLayoutManager(stagger);
@@ -162,7 +170,6 @@ public class SearchActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
@@ -172,21 +179,29 @@ public class SearchActivity extends AppCompatActivity {
 
 
     public void loadMoreDataFromApi(int page) {
+
         //Toast.makeText(SearchActivity.this, query, Toast.LENGTH_SHORT).show();
         AsyncHttpClient client = new AsyncHttpClient();
         String url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
 
+        //makes endless scroll functional
+        if (page == 0){
+            articles.clear();
+        }
+
         RequestParams params = new RequestParams();
         params.put("api-key", "ce2566fc302146cf8a2d5b84c6baf33a");
         params.put("page", page);
-        params.put("q", query2);
-        if (!setDateString.isEmpty()){
+        if (query2 != null) {
+            params.put("q", query2);
+        }
+        if (setDateString != null){
             params.put("begin_date", setDateString);
         }
-        if (!setOrderString.isEmpty()){
+        if (setOrderString != null ){
             params.put("sort", setOrderString);
         }
-        if (!setTopicString.isEmpty()){
+        if (setTopicString != null){
             params.put("fq", setTopicString);
         }
 
@@ -204,7 +219,6 @@ public class SearchActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
@@ -226,12 +240,18 @@ public class SearchActivity extends AppCompatActivity {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     scroll = true;
+                    rvArticles.setAdapter(adapter);
 
                     //make query global
                     query2 = query;
 
+                    toparticles.clear();
+                    adapter2.notifyDataSetChanged();
+
+                    loadMoreDataFromApi(0);
+
                     //Toast.makeText(SearchActivity.this, query, Toast.LENGTH_SHORT).show();
-                    AsyncHttpClient client = new AsyncHttpClient();
+                    /*AsyncHttpClient client = new AsyncHttpClient();
                     String url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
 
                     RequestParams params = new RequestParams();
@@ -275,7 +295,7 @@ public class SearchActivity extends AppCompatActivity {
                         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                             super.onFailure(statusCode, headers, throwable, errorResponse);
                         }
-                    });
+                    });*/
                     // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
                     // see https://code.google.com/p/android/issues/detail?id=24599
                     searchView.clearFocus();
