@@ -47,9 +47,9 @@ public class SearchActivity extends AppCompatActivity {
     String setOrderString;
     String setTopicString;
     ArrayList<Article> articles;
-    ArrayList<TopArticle> toparticles;
+   // ArrayList<TopArticle> toparticles;
     ArticleArrayAdapter adapter;
-    TopArticleArrayAdapter adapter2;
+   // TopArticleArrayAdapter adapter2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +66,12 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (scroll){
+       /* if (scroll){
             rvArticles.setAdapter(adapter);
         }
         else {
             rvArticles.setAdapter(adapter2);
-        }
+        }*/
 
     }
 
@@ -79,17 +79,17 @@ public class SearchActivity extends AppCompatActivity {
       //  gvResults = (GridView) findViewById(R.id.gvResults);
         rvArticles = (RecyclerView) findViewById(R.id.rvArticles);
         articles = new ArrayList<>();
-        toparticles = new ArrayList<>();
+        //toparticles = new ArrayList<>();
         adapter = new ArticleArrayAdapter(articles);
-        adapter2 = new TopArticleArrayAdapter(toparticles);
-        rvArticles.setAdapter(adapter2);
+        //adapter2 = new TopArticleArrayAdapter(toparticles);
+        rvArticles.setAdapter(adapter);
         // Attach the layout manager to the recycler view
         StaggeredGridLayoutManager stagger = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rvArticles.setLayoutManager(stagger);
 
-        if (scroll) {
-            //update views based on scroll
-            rvArticles.addOnScrollListener(new EndlessRecyclerViewScrollListener(stagger) {
+
+        //update views based on scroll
+        rvArticles.addOnScrollListener(new EndlessRecyclerViewScrollListener(stagger) {
                 @Override
                 public void onLoadMore(int page, int totalItemsCount) {
                     // Triggered only when new data needs to be appended to the list
@@ -97,8 +97,8 @@ public class SearchActivity extends AppCompatActivity {
 
                 }
 
-            });
-        }
+        });
+
 
         //click on article
         adapter.setOnItemClickListener(new ArticleArrayAdapter.OnItemClickListener(){
@@ -115,23 +115,7 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(i); // brings up the second activity
             }
         });
-        //click on article
-        adapter2.setOnItemClickListener(new TopArticleArrayAdapter.OnItemClickListener(){
-            @Override
-            public void onItemClick(View view, int position){
-                //create an intent to display the article
-                Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
-                //get the article to display
-                //pass in that article into intent
 
-                TopArticle article = toparticles.get(position);
-                i.putExtra("article2", article);
-
-
-                //launch the activity
-                startActivity(i); // brings up the second activity
-            }
-        });
 
         //custom font on toolbar
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -148,13 +132,14 @@ public class SearchActivity extends AppCompatActivity {
 
 
     public void loadOnStart() {
-        scroll = false;
+      //  scroll = false;
         //Toast.makeText(SearchActivity.this, query, Toast.LENGTH_SHORT).show();
         AsyncHttpClient client = new AsyncHttpClient();
         String url = "https://api.nytimes.com/svc/topstories/v2/home.json";
         RequestParams params = new RequestParams();
         params.put("api-key", "ce2566fc302146cf8a2d5b84c6baf33a");
 
+        Log.d("searchactivity", url + "?" + params);
         client.get(url, params, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -162,10 +147,10 @@ public class SearchActivity extends AppCompatActivity {
                 JSONArray articleJsonResults = null;
                 try {
                     articleJsonResults = response.getJSONArray("results");
-                    toparticles.clear();
-                    toparticles.addAll(TopArticle.fromJSONArray(articleJsonResults));
-                    adapter2.notifyDataSetChanged();
-                    Log.d("DEBUG", toparticles.toString());
+                    articles.clear();
+                    articles.addAll(Article.fromJSONArray(articleJsonResults));
+                    adapter.notifyDataSetChanged();
+                    Log.d("DEBUG", articles.toString());
                 } catch (JSONException e){
                     e.printStackTrace();
                 }
@@ -187,6 +172,7 @@ public class SearchActivity extends AppCompatActivity {
         //makes endless scroll functional
         if (page == 0){
             articles.clear();
+            adapter.notifyDataSetChanged();
         }
 
         RequestParams params = new RequestParams();
@@ -205,6 +191,7 @@ public class SearchActivity extends AppCompatActivity {
             params.put("fq", setTopicString);
         }
 
+        Log.d("searchactivity", url + "?" + params);
         client.get(url, params, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -239,14 +226,10 @@ public class SearchActivity extends AppCompatActivity {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    scroll = true;
-                    rvArticles.setAdapter(adapter);
+                   // scroll = true;
 
                     //make query global
                     query2 = query;
-
-                    toparticles.clear();
-                    adapter2.notifyDataSetChanged();
 
                     loadMoreDataFromApi(0);
 
@@ -334,6 +317,7 @@ public class SearchActivity extends AppCompatActivity {
             setDateString = data.getExtras().getString("date");
             setOrderString = data.getExtras().getString("order");
             setTopicString = data.getExtras().getString("topics");
+            loadMoreDataFromApi(0);
         }
     }
 

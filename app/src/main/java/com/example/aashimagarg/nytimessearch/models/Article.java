@@ -18,19 +18,34 @@ public class Article implements Serializable {
 
     public Article(JSONObject jsonObject) {
         try {
-            this.webUrl = jsonObject.getString("web_url");
 
-            JSONObject headline = jsonObject.getJSONObject("headline");
-            this.headLine = headline.getString("main");
+            this.webUrl = jsonObject.optString("web_url");
+            if (webUrl.equals("")){
+                webUrl = jsonObject.optString("url");
+            }
 
             JSONArray multimedia = jsonObject.getJSONArray("multimedia");
 
-            if (multimedia.length() > 0){
-                JSONObject multimediaJson = multimedia.getJSONObject(0);
-                this.thumbNail = "http://www.nytimes.com/" + multimediaJson.getString("url");
+
+            JSONObject headline = jsonObject.optJSONObject("headline");
+            if (headline == null){
+                this.headLine = jsonObject.optString("title");
+                if (multimedia.length() > 0){
+                    JSONObject multimediaJson = multimedia.getJSONObject(3);
+                    this.thumbNail = multimediaJson.getString("url");
+                } else {
+                    this.thumbNail = "";
+                }
             } else {
-                this.thumbNail = "";
+                this.headLine = headline.optString("main");
+                if (multimedia.length() > 0){
+                    JSONObject multimediaJson = multimedia.getJSONObject(0);
+                    this.thumbNail = "http://www.nytimes.com/" + multimediaJson.getString("url");
+                } else {
+                    this.thumbNail = "";
+                }
             }
+
         } catch (JSONException e){
 
         }
