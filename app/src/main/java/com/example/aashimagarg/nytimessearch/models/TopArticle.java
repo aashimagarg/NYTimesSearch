@@ -1,4 +1,4 @@
-package com.example.aashimagarg.nytimessearch;
+package com.example.aashimagarg.nytimessearch.models;
 
 import org.json.JSONArray;
 import org.json.JSONException;

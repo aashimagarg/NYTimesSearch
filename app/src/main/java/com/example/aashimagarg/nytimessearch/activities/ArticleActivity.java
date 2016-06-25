@@ -15,9 +15,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-import com.example.aashimagarg.nytimessearch.Article;
+import com.example.aashimagarg.nytimessearch.models.Article;
 import com.example.aashimagarg.nytimessearch.R;
-import com.example.aashimagarg.nytimessearch.TopArticle;
+import com.example.aashimagarg.nytimessearch.models.TopArticle;
 
 public class  ArticleActivity extends AppCompatActivity {
 

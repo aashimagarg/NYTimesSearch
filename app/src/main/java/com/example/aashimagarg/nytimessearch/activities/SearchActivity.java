@@ -16,14 +16,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.aashimagarg.nytimessearch.Article;
-import com.example.aashimagarg.nytimessearch.ArticleArrayAdapter;
+import com.example.aashimagarg.nytimessearch.models.Article;
+import com.example.aashimagarg.nytimessearch.models.ArticleArrayAdapter;
 import com.example.aashimagarg.nytimessearch.EndlessRecyclerViewScrollListener;
 import com.example.aashimagarg.nytimessearch.R;
-import com.example.aashimagarg.nytimessearch.TopArticle;
-import com.example.aashimagarg.nytimessearch.TopArticleArrayAdapter;
+import com.example.aashimagarg.nytimessearch.models.TopArticle;
+import com.example.aashimagarg.nytimessearch.models.TopArticleArrayAdapter;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;

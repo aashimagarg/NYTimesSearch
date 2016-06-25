@@ -1,4 +1,4 @@
-package com.example.aashimagarg.nytimessearch;
+package com.example.aashimagarg.nytimessearch.models;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
